@@ -26,7 +26,9 @@ Projeto criado para fazer o cadastro de produtos com controle de estoque vincula
 Para rodar os testes:
 
 ### Roadmap
-- Configurando o docker e variáveis de ambiente
+- Configurando o docker e variáveis de ambiente.
+- Definido PestPHP como framework de testes.
+- Criando as migrations e models iniciais do projeto.
 
 ## License
 
