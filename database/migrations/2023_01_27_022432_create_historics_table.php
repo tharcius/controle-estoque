@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('historics', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['in', 'out']);
+            $table->enum('type', ['input', 'output']);
+            $table->enum('motive', ['buy', 'sell', 'devolution', 'warranty']);
+            $table->text('details');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
