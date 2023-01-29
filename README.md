@@ -29,6 +29,9 @@ Para rodar os testes:
 - Configurando o docker e variáveis de ambiente.
 - Definido PestPHP como framework de testes.
 - Criando as migrations e models iniciais do projeto.
+- CRUD de produtos implementado.,
+	"value": "400.75"
+- Histórico de entradas e saídas de produtos implementados.
 
 ## License
 

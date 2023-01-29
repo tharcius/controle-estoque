@@ -12,7 +12,30 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'value'];
+    protected $fillable = [
+        'name',
+        'value',
+    ];
+
+    protected $dates = [
+        'deleted_at',
+    ];
+
+    protected $visible = [
+        'id',
+        'name',
+        'value',
+    ];
+
+    public function historics()
+    {
+        return $this->hasMany(Historic::class);
+    }
+
+    public function historic()
+    {
+        return $this->hasMany(Historic::class)->orderBy('created_at', 'desc')->limit(1);
+    }
 
     /**
      * @return Attribute
