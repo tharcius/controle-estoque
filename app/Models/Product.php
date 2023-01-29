@@ -25,6 +25,12 @@ class Product extends Model
         'id',
         'name',
         'value',
+        'quantity',
+        'historic'
+    ];
+
+    protected $appends = [
+        'quantity',
     ];
 
     public function historics()
@@ -37,6 +43,11 @@ class Product extends Model
         return $this->hasMany(Historic::class)->orderBy('created_at', 'desc')->limit(1);
     }
 
+    public function stock()
+    {
+        return $this->hasOne(Stock::class);
+    }
+
     /**
      * @return Attribute
      */
@@ -46,5 +57,10 @@ class Product extends Model
             get: fn($value) => ($value / 100),
             set: fn($value) => ($value * 100)
         );
+    }
+
+    public function getQuantityAttribute()
+    {
+        return $this->stock->quantity;
     }
 }

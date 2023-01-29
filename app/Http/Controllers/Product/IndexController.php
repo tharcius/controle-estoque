@@ -20,6 +20,7 @@ class IndexController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
+
         $data = $this->product->all();
         return response()->json($data);
     }

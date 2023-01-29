@@ -8,6 +8,7 @@ use App\Http\Controllers\Product\ShowController as ProductsShow;
 use App\Http\Controllers\Product\UpdateController as ProductsUpdate;
 use App\Http\Controllers\Product\BuyController as ProductsBuy;
 use App\Http\Controllers\Product\SellController as ProductsSell;
+use App\Http\Controllers\Product\ValidateStockController as ProductsValidateStock;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +22,11 @@ use App\Http\Controllers\Product\SellController as ProductsSell;
 */
 Route::prefix('/products')->group(function () {
     Route::get('/', ProductsIndex::class);
-    Route::post('/', ProductsCreate::class);
+    Route::get('/validate-stock', ProductsValidateStock::class);
     Route::get('/{id}', ProductsShow::class);
+    Route::post('/', ProductsCreate::class);
+    Route::post('/{id}/buy', ProductsBuy::class);
+    Route::post('/{id}/sell', ProductsSell::class);
     Route::patch('/{id}', ProductsUpdate::class);
     Route::delete('/{id}', ProductsDelete::class);
-    Route::post('/buy/{id}', ProductsBuy::class);
-    Route::post('/sell/{id}', ProductsSell::class);
 });

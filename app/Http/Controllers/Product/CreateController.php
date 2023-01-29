@@ -21,6 +21,7 @@ class CreateController extends Controller
     {
         $data = $request->only(['name', 'value']);
         if ($product = $this->product->create($data)) {
+            $product->stock()->create(['quantity' => 0]);
             return response()->json(['data' => $product, 'error' => null], 201);
         }
         return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);

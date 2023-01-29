@@ -20,19 +20,26 @@ class Historic extends Model
         'details',
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at'
+    ];
+
+
     public function product()
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     public function scopeInput($query)
     {
-        return $query->whereType('input')->get();
+        return $query->whereType('input');
     }
 
     public function scopeOutput($query)
     {
-        return $query->whereType('output')->get();
+        return $query->where('type', 'output');
     }
 
     /**

@@ -22,12 +22,22 @@ class SellController extends Controller
     {
         $data = $request->only(['details', 'value', 'quantity']);
         $data['type'] = 'output';
-        if ($product = $this->product->find($id)) {
-            $product->update($data);
-            $product->historics()->create($data);
-            $result = $this->product->with('historic:id,quantity,value,product_id')->limit(1)->find($id);
-            return response()->json(['data' => $result, 'error' => null], 201);
+        $product = $this->product->with('stock')->find($id);
+
+        if (!$product) {
+            return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);
         }
-        return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);
+
+        $product->update($data);
+        $product->historics()->create($data);
+
+        if (empty($product->stock) || $data['quantity'] > $product->stock->quantity) {
+            return response()->json(['data' => null, 'error' => ['error' => 'Insufficient quantity of product in stock']], 422);
+        } else {
+            $product->stock->update(['quantity' => ($product->stock->quantity - $data['quantity'])]);
+        }
+
+        $result = $this->product->with(['historic:id,quantity,value,product_id', 'stock'])->find($id);
+        return response()->json(['data' => $result, 'error' => null], 201);
     }
 }

@@ -18,16 +18,21 @@ class BuyController extends Controller
      * @param int $id
      * @return JsonResponse
      */
+
     public function __invoke(FlowRequest $request, int $id): JsonResponse
     {
         $data = $request->only(['details', 'value', 'quantity']);
         $data['type'] = 'input';
-        if ($product = $this->product->find($id)) {
-            $product->update($data);
-            $product->historics()->create($data);
-            $result = $this->product->with('historic:id,quantity,value,product_id')->limit(1)->find($id);
-            return response()->json(['data' => $result, 'error' => null], 201);
+        $product = $this->product->with('stock')->find($id);
+
+        if (!$product) {
+            return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);
         }
-        return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);
+
+        $product->update($data);
+        $product->historics()->create($data);
+        $product->stock->update(['quantity' => ($product->stock->quantity + $data['quantity'])]);
+        $result = $this->product->with(['historic:id,quantity,value,product_id', 'stock'])->find($id);
+        return response()->json(['data' => $result, 'error' => null], 201);
     }
 }
