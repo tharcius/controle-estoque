@@ -2,6 +2,8 @@ version: '3.8'
 services:
     iebt_api:
         container_name: iebt_api
+        depends_on:
+            -   iebt_composer
         build:
             args:
                 user: admin
@@ -18,6 +20,8 @@ services:
 
     iebt_nginx:
         container_name: iebt_nginx
+        depends_on:
+            -   iebt_api
         image: nginx:1.23.3-alpine
         restart: unless-stopped
         ports:
@@ -47,6 +51,8 @@ services:
 
     iebt_composer:
         container_name: iebt_composer
+        depends_on:
+            - iebt_db
         build:
             args:
                 user: admin
@@ -54,11 +60,10 @@ services:
             context: ./
             dockerfile: Dockerfile
         image: composer
-        working_dir: /app
+        working_dir: /var/www
         volumes:
-            - ./:/app
-        command: composer install
-
+            - ./:/var/www
+        command: sh /var/www/docker/composer/initializing.sh
 
 networks:
     iebt:

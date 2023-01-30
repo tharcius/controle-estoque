@@ -17,6 +17,7 @@ Projeto criado para fazer o cadastro de produtos com controle de estoque vincula
 
 ## Regras e validações
 - É preciso criar um produto para ser possível controlar o estoque do mesmo.
+- Ao dar entrada em um produto(/products/buy/{id}), o valor do mesmo é atualizado para o da compra. 
 - Ao dar entrada em um produto(/products/buy/{id}), é criado um registro na tabela de histórico do tipo input contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/sell/{id}), é criado um registro na tabela de histórico do tipo output contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/buy/{id}), é ajustado (acrescido) a quantidade atual do estoque.
@@ -24,12 +25,48 @@ Projeto criado para fazer o cadastro de produtos com controle de estoque vincula
 - Valida a quantidade em estoque de acordo com os registros do histórico.
 
 ### Rodando o projeto
+Caso for a primera execução, execute o comando:
+```shell
+docker-compose up -d --build
+```
+
+Se ja tiver executado o projeto antes, execute o comando:
+```shell
+docker-compose up -d
+```
+
+
+Para iniciar o banco de dados execute:
+~~~shell
+php /var/www/artisan migrate
+~~~
+
+
+Para iniciar o banco de dados execute:
+~~~shell
+docker exec -it iebt_api php artisan migrate
+~~~
 
 ### Rotas do projeto
+| Tipo | Rota | Descrição |
+| :--- | :--- | :--- |
+| GET | /products | Exibe todos os produtos | 
+| POST | /products | Cria um novo produtos |
+| GET | /products/ID | Exibe um produtos específico |
+| PATCH | /products/ID | Atualiza dados de um produtos |
+| DELETE |/products/ID | Exclui um produtos |
+| POST | /products/ID/buy | Compra um produto (adiciona ao estoque) |
+| POST | /products/ID/sell | Vende um produto (decresce do estoque) |
+| GET | /products/validate-stock | Verifica se existe alguma inconsistência no estoque e caso haja corrije baseado no histórico |
+
 
 ### Testes/QA
 
 Para rodar os testes:
+```shell
+docker exec -it iebt_api php artisan test
+```
+
 
 ### Roadmap
 - Configurando o docker e variáveis de ambiente.
@@ -37,8 +74,8 @@ Para rodar os testes:
 - Criando as migrations e models iniciais do projeto.
 - CRUD de produtos implementado.,
 - Histórico de entradas e saídas de produtos implementados.
-- Implementando o controle de estoque a partir da entrada e saída de produtos.
-
+- Implementando a validação de estoque a partir da entrada e saída de produtos.
+- Implementando testes unitários com o PestPHP
 
 ## License
 
