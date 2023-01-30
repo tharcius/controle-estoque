@@ -50,7 +50,11 @@ docker exec -it iebt_api php artisan migrate
 ### Documentação 
 Uma documentação básica e mínima foi adicionada no projeto utilizando o Scribe ()
 http://api.tvs:8000/docs/#
+
+Para gerar a documentação basta rodar o comando abaixo:
+```shell
 docker exec -u root -it iebt_api php artisan scribe:generate
+```
 
 
 ### Rotas do projeto
