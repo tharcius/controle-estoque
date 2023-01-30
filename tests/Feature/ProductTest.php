@@ -44,3 +44,20 @@ it('has to delete the product with id 14 and return an error', function () {
     $product->assertJson(['data' => null, 'error' => ['error' => 'Failure during deleting']]);
 });
 
+it('has to buy a product with id 5', function () {
+    Product::factory(10)->create();
+    $product = $this->postJson('/products/5/buy', ['value' => 150, 'quantity' => 8]);
+    $product->assertJsonStructure(['data', 'error']);
+    $product->assertValid('data,error', null);
+    $product->assertJsonFragment(['data' => ['value' => 150.00, 'quantity' => 8]]);
+});
+
+it('has to sell a product with id 6', function () {
+    Product::factory(10)->create();
+    $this->postJson('/products/6/buy', ['value' => 150, 'quantity' => 8]);
+    $product = $this->postJson('/products/+/sell', ['value' => 200, 'quantity' => 1]);
+    $product->assertJsonStructure(['data', 'error']);
+    $product->assertValid('data,error', null);
+    $product->assertJsonFragment(['data' => ['value' => 200.00, 'quantity' => 7]]);
+});
+
