@@ -17,6 +17,7 @@ Projeto criado para fazer o cadastro de produtos com controle de estoque vincula
 
 ## Regras e validações
 - É preciso criar um produto para ser possível controlar o estoque do mesmo.
+- Ao dar entrada em um produto(/products/buy/{id}), o valor do mesmo é atualizado para o da compra. 
 - Ao dar entrada em um produto(/products/buy/{id}), é criado um registro na tabela de histórico do tipo input contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/sell/{id}), é criado um registro na tabela de histórico do tipo output contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/buy/{id}), é ajustado (acrescido) a quantidade atual do estoque.
@@ -37,8 +38,8 @@ Para rodar os testes:
 - Criando as migrations e models iniciais do projeto.
 - CRUD de produtos implementado.,
 - Histórico de entradas e saídas de produtos implementados.
-- Implementando o controle de estoque a partir da entrada e saída de produtos.
-
+- Implementando a validação de estoque a partir da entrada e saída de produtos.
+- Implementando testes unitários com o PestPHP
 
 ## License
 

@@ -61,6 +61,6 @@ class Product extends Model
 
     public function getQuantityAttribute()
     {
-        return $this->stock->quantity;
+        return $this->stock->quantity ?? 0;
     }
 }
