@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Http\Requests\Product\CreateRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UpdateController extends Controller
 {
-    public function __construct(private Product $product)
-    {
-    }
-
     /**
-     * @param Request $request
+     * Update details (name, value) of a product
+     * @param CreateRequest $request
      * @param int $id
      * @return JsonResponse
      */
-    public function __invoke(Request $request, int $id): JsonResponse
+
+    public function __invoke(CreateRequest $request, int $id): JsonResponse
     {
-        $data = $request->only(['name', 'value']);
-        $product = $this->product->find($id);
-        if ($product->update($data)){
-            return response()->json(['data' => $product, 'error' => null], 200);
-        }
-        return response()->json(['data' => null, 'error' => ['error' => 'Failure during registration']], 422);
+        $product = $this->product->updateProduct(id: $id, data:  $request->only(['name', 'value']));
+        $responseData = [
+            'data' => empty($product['error']) ? $product : null,
+            'error' => $product['error'] ?? null,
+        ];
+        $responseStatusCode = empty($product['error']) ? 200 : 422;
+
+        return response()->json($responseData, $responseStatusCode);
     }
 }

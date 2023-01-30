@@ -8,16 +8,15 @@ use Illuminate\Http\JsonResponse;
 
 class ValidateStockController extends Controller
 {
-    public function __construct(private Product $product)
-    {
-    }
-
     /**
+     * Its use the historic registers of products to validade the stock quantity, if its found any inconsistency its
+     * update the stock based in historic
      *
+     * @return JsonResponse
      */
     public function __invoke(): JsonResponse
     {
-        $products = $this->product->with('historics')->get();
+        $products = Product::with('historics')->get();
         $errorsToReport = [];
         foreach ($products as $product) {
             $currentQuantity = $product->quantity;
@@ -26,7 +25,7 @@ class ValidateStockController extends Controller
             $historicQuantity = $productInputHistoric - $productOutputHistoric;
 
             if ($currentQuantity != $historicQuantity) {
-                $this->product->update(['quantity' => $historicQuantity]);
+                $product->stock->update(['quantity' => $historicQuantity]);
                 $errorsToReport[] = [
                     'product_id' => $product->id,
                     'name' => $product->name,
@@ -35,9 +34,15 @@ class ValidateStockController extends Controller
                 ];
             };
         }
-        if (empty($errorsToReport)) {
-            return response()->json(['data' => null, 'message' => 'No stock inconsistency found', 'error' => null], 200);
-        }
-        return response()->json(['data' => $errorsToReport, 'message' => 'Stock inconsistency found and correct', 'error' => null], 200);
+
+        $message = empty($errorsToReport)
+            ? 'No stock inconsistency found'
+            : 'Stock inconsistency found and corrected';
+
+        return response()->json([
+            'data' => $errorsToReport,
+            'message' => $message,
+            'error' => null
+        ], 200);
     }
 }

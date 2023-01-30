@@ -21,9 +21,10 @@ it('should return an JSON with the register or the error', function (
                 ],
                 'result' => [
                     'data' => [
-                        'name' => 'New Product 01',
-                        'id' => 1,
-                        'quantity' => 0
+                        "quantity" => 0,
+                        "product_id" => 1,
+                        "id" => 1,
+                        "name" => "New Product 01"
                     ],
                     'error' => null
                 ]
@@ -37,10 +38,10 @@ it('should return an JSON with the register or the error', function (
                 ],
                 'result' => [
                     'data' => [
-                        'name' => 'New Product 02',
-                        'value' => 371.23,
-                        'id' => 1,
-                        'quantity' => 0
+                        "quantity" => 0,
+                        "product_id" => 1,
+                        "id" => 1,
+                        "name" => "New Product 02",
                     ],
                     'error' => null
                 ]
@@ -49,13 +50,13 @@ it('should return an JSON with the register or the error', function (
         'test #03' =>
             [
                 'dataset' => [
-                    'name' => 'New Product 02',
+                    'name' => 'New Product 03',
                     'value' => '371.23',
                     'quantity' => 8
                 ],
                 'result' => [
                     'data' => [
-                        'name' => 'New Product 02',
+                        'name' => 'New Product 03',
                         'id' => 1,
                         'quantity' => 0
                     ],
@@ -78,5 +79,3 @@ it('should return an JSON with the register or the error', function (
             ],
     ]
 );
-
-

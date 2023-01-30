@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Product\BuyController as ProductsBuy;
 use App\Http\Controllers\Product\CreateController as ProductsCreate;
-use App\Http\Controllers\Product\IndexController as ProductsIndex;
 use App\Http\Controllers\Product\DeleteController as ProductsDelete;
+use App\Http\Controllers\Product\IndexController as ProductsIndex;
+use App\Http\Controllers\Product\SellController as ProductsSell;
 use App\Http\Controllers\Product\ShowController as ProductsShow;
 use App\Http\Controllers\Product\UpdateController as ProductsUpdate;
-use App\Http\Controllers\Product\BuyController as ProductsBuy;
-use App\Http\Controllers\Product\SellController as ProductsSell;
 use App\Http\Controllers\Product\ValidateStockController as ProductsValidateStock;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

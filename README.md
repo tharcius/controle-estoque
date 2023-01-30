@@ -17,7 +17,7 @@ Projeto criado para fazer o cadastro de produtos com controle de estoque vincula
 
 ## Regras e validações
 - É preciso criar um produto para ser possível controlar o estoque do mesmo.
-- Ao dar entrada em um produto(/products/buy/{id}), o valor do mesmo é atualizado para o da compra. 
+- Ao dar entrada em um produto(/products/buy/{id}), o valor do mesmo é atualizado para o da compra.
 - Ao dar entrada em um produto(/products/buy/{id}), é criado um registro na tabela de histórico do tipo input contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/sell/{id}), é criado um registro na tabela de histórico do tipo output contendo quantidade e valor.
 - Ao dar entrada em um produto(/products/buy/{id}), é ajustado (acrescido) a quantidade atual do estoque.
@@ -47,6 +47,12 @@ Para iniciar o banco de dados execute:
 docker exec -it iebt_api php artisan migrate
 ~~~
 
+### Documentação 
+Uma documentação básica e mínima foi adicionada no projeto utilizando o Scribe ()
+http://api.tvs:8000/docs/#
+docker exec -u root -it iebt_api php artisan scribe:generate
+
+
 ### Rotas do projeto
 | Tipo | Rota | Descrição |
 | :--- | :--- | :--- |
@@ -75,7 +81,9 @@ docker exec -it iebt_api php artisan test
 - CRUD de produtos implementado.,
 - Histórico de entradas e saídas de produtos implementados.
 - Implementando a validação de estoque a partir da entrada e saída de produtos.
-- Implementando testes unitários com o PestPHP
+- Implementando testes unitários com o PestPHP.
+- Refatorando e corrigindo erros de percurso.
+- Criando Repository e Interface para Produtos
 
 ## License
 

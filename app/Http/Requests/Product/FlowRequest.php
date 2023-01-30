@@ -25,7 +25,7 @@ class FlowRequest extends FormRequest
     {
         return [
             'value' => 'required|numeric|min:0.01',
-            'quantity' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
             'details' => 'string'
         ];
     }
